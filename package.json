@@ -2,9 +2,10 @@
   "name": "mydiary",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/server.js"
   },
   "repository": {
     "type": "git",
@@ -16,7 +17,11 @@
     "url": "https://github.com/Bogdan-Zinovij/MyDiary/issues"
   },
   "homepage": "https://github.com/Bogdan-Zinovij/MyDiary#readme",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.13.0"
+  },
   "devDependencies": {
     "nodemon": "^2.0.15"
   }
