@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Bogdan-Zinovij/MyDiary#readme",
   "dependencies": {
     "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
     "sequelize": "^6.13.0"
   },
