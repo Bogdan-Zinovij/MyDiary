@@ -1,10 +1,11 @@
 const User = require('../db/models/User');
 const generateAccessToken = require('../utils/generateAccessToken');
 
-class authController {
+class AuthController {
   async registration(req, res) {
     try {
       await User.create(req.body);
+
       res.status(201).json({ message: 'User was created!' });
     } catch (err) {
       res.status(400).json({ message: err });
@@ -25,9 +26,8 @@ class authController {
           .json({ message: `User was not found / incorrect password` });
       }
       const token = generateAccessToken(user.id);
-      return res.json({ token });
+      res.status(200).json({ token });
     } catch (e) {
-      console.log(e);
       res.status(400).json({ message: 'Login error' });
     }
   }
@@ -35,6 +35,7 @@ class authController {
   async getUsers(req, res) {
     try {
       const userList = await User.findAll({ order: ['id'] });
+
       res.status(200).json(userList);
     } catch (err) {
       res.status(400).json({ message: err });
@@ -42,4 +43,4 @@ class authController {
   }
 }
 
-module.exports = new authController();
+module.exports = new AuthController();
