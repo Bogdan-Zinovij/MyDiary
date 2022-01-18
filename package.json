@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Bogdan-Zinovij/MyDiary#readme",
   "dependencies": {
+    "dotenv": "^14.2.0",
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
