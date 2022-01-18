@@ -2,9 +2,6 @@
 
 const express = require('express');
 const authRouter = require('./routers/authRouter');
-// const userController = require('./controllers/userController');
-// const noteController = require('./controllers/noteController');
-// const folderController = require('./controllers/folderController');
 
 const app = express();
 

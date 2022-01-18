@@ -24,9 +24,7 @@ class authController {
           .status(400)
           .json({ message: `User was not found / incorrect password` });
       }
-      console.log('s');
       const token = generateAccessToken(user.id);
-      console.log('e');
       return res.json({ token });
     } catch (e) {
       console.log(e);
