@@ -1,5 +1,4 @@
 const Folder = require('../db/models/Folder');
-const folderRouter = require('../routers/folderRouter');
 
 class FolderController {
   async createFolder(req, res) {
