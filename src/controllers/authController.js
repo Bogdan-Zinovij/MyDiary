@@ -8,7 +8,7 @@ class AuthController {
 
       res.status(201).json({ message: 'User was created!' });
     } catch (err) {
-      res.status(400).json({ message: err });
+      res.status(400).json({ message: err.message });
     }
   }
 
@@ -35,7 +35,7 @@ class AuthController {
 
       res.status(200).json({ token });
     } catch (err) {
-      res.status(400).json({ message: err });
+      res.status(400).json({ message: err.message });
     }
   }
 
@@ -45,7 +45,7 @@ class AuthController {
 
       res.status(200).json(userList);
     } catch (err) {
-      res.status(400).json({ message: err });
+      res.status(400).json({ message: err.message });
     }
   }
 }
