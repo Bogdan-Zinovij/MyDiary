@@ -4,39 +4,49 @@ class FolderController {
   async createFolder(req, res) {
     try {
       const { name } = req.body;
-      const { id } = req.user;
+      const userId = req.userId;
 
-      await Folder.create({ userId: id, name });
+      await Folder.create({ userId, name });
 
       res.status(201).json({ message: 'Folder was created!' });
     } catch (err) {
-      res.status(400).json({ message: err });
+      res.status(400).json({ message: err.message });
     }
   }
 
   async deleteFolder(req, res) {
     try {
       const { id } = req.body;
-      const folder = await Folder.findOne({ where: { id } });
+      const userId = req.userId;
+      const folder = await Folder.findByPk(id);
 
-      if (!folder)
+      if (!folder) {
         throw new Error('Folder with the specified ID does not exist');
+      }
 
-      await Folder.destroy({ where: { id } });
+      if (folder.userId !== userId) {
+        throw new Error('This folder does not belong to the user');
+      }
+
+      await folder.destroy();
 
       res.status(200).json({ message: 'Folder was deleted' });
     } catch (err) {
-      res.status(400).json({ message: err });
+      res.status(400).json({ message: err.message });
     }
   }
 
   async getFolders(req, res) {
     try {
-      const folderList = await Folder.findAll({ order: ['id'] });
+      const userId = req.userId;
+      const folderList = await Folder.findAll({
+        where: { userId },
+        order: ['id'],
+      });
 
       res.status(200).json(folderList);
     } catch (err) {
-      res.status(400).json({ message: err });
+      res.status(400).json({ message: err.message });
     }
   }
 }
