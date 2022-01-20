@@ -14,11 +14,11 @@ class NoteController {
   async deleteNote(req, res) {
     try {
       const { id } = req.body;
-      const note = await Note.findOne({ where: { id } });
+      const note = await Note.findByPk(id);
 
       if (!note) throw new Error('Note with the specified ID does not exist');
 
-      await Note.destroy({ where: { id } });
+      await note.destroy();
 
       res.status(200).json({ message: 'Note was deleted' });
     } catch (err) {

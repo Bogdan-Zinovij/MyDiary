@@ -17,12 +17,12 @@ class FolderController {
   async deleteFolder(req, res) {
     try {
       const { id } = req.body;
-      const folder = await Folder.findOne({ where: { id } });
+      const folder = await Folder.findByPk(id);
 
       if (!folder)
         throw new Error('Folder with the specified ID does not exist');
 
-      await Folder.destroy({ where: { id } });
+      await folder.destroy();
 
       res.status(200).json({ message: 'Folder was deleted' });
     } catch (err) {
