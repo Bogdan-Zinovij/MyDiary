@@ -3,8 +3,9 @@ const authRouter = new Router();
 const authController = require('../controllers/authController');
 const authMiddleware = require('../middleware/authMiddleware');
 
-authRouter.post('/registration', authController.registration);
-authRouter.post('/login', authController.login);
-authRouter.get('/users', authMiddleware, authController.getUsers);
+authRouter
+  .post('/registration', authController.registration)
+  .post('/login', authController.login)
+  .get('/users', authMiddleware, authController.getUsers);
 
 module.exports = authRouter;

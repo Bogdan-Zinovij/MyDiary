@@ -60,6 +60,34 @@ class NoteController {
       res.status(400).json({ message: err.message });
     }
   }
+
+  async updateNote(req, res) {
+    try {
+      const userId = req.userId;
+      const { id, dataToUpdate } = req.body;
+      const note = await Note.findByPk(id);
+
+      if (!note) {
+        throw new Error('Note with the specified ID does not exist');
+      }
+
+      const folder = await Folder.findByPk(note.folderId);
+
+      if (folder.userId !== userId) {
+        throw new Error('This note does not belong to the user');
+      }
+
+      const [isUpdated] = await Note.update(dataToUpdate, { where: { id } });
+
+      if (isUpdated) {
+        res.status(200).json({ message: 'Note was updated' });
+      } else {
+        res.status(400).json({ message: 'Failed to update note' });
+      }
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  }
 }
 
 module.exports = new NoteController();
