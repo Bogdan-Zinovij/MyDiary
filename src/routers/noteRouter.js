@@ -3,8 +3,10 @@ const noteRouter = new Router();
 const noteController = require('../controllers/noteController');
 const authMiddleware = require('../middleware/authMiddleware');
 
-noteRouter.post('/create', authMiddleware, noteController.createNote);
-noteRouter.delete('/delete', authMiddleware, noteController.deleteNote);
-noteRouter.get('/getnotes', authMiddleware, noteController.getNotes);
+noteRouter
+  .post('/', authMiddleware, noteController.createNote)
+  .delete('/', authMiddleware, noteController.deleteNote)
+  .get('/', authMiddleware, noteController.getNotes)
+  .patch('/', authMiddleware, noteController.updateNote);
 
 module.exports = noteRouter;
