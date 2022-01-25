@@ -10,6 +10,18 @@ class NoteController {
         return res.status(400).json({ message: errors });
       }
 
+      const { folderId } = req.body;
+      const userId = req.userId;
+      const folder = await Folder.findByPk(folderId);
+
+      if (!folder) {
+        throw new Error('Folder with the specified ID does not exist');
+      }
+
+      if (folder.userId !== userId) {
+        throw new Error('This folder does not belong to the user');
+      }
+
       await Note.create(req.body);
 
       res.status(201).json({ message: 'Note was created!' });
