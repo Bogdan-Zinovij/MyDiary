@@ -11,4 +11,9 @@ const registrValidationScheme = [
     .isLength({ min: 8, max: 16 }),
 ];
 
-module.exports = registrValidationScheme;
+const loginValidationScheme = [
+  body('nickname').notEmpty().withMessage('Nickname can not be empty'),
+  body('password').notEmpty().withMessage('Password can not be empty'),
+];
+
+module.exports = { registrValidationScheme, loginValidationScheme };

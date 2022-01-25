@@ -1,8 +1,10 @@
 const Router = require('express');
 const authRouter = new Router();
 const authController = require('../controllers/authController');
-const registrValidationScheme = require('../validation/registrValidation');
-const loginValidationScheme = require('../validation/loginValidation');
+const {
+  registrValidationScheme,
+  loginValidationScheme,
+} = require('../validation/authValidation');
 
 authRouter
   .post('/registration', registrValidationScheme, authController.registration)
