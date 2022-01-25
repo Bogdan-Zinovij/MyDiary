@@ -22,6 +22,11 @@ class AuthController {
 
   async login(req, res) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ message: errors });
+      }
+
       const { nickname, password } = req.body;
       const user = await User.findOne({ where: { nickname } });
 
