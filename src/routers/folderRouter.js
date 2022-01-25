@@ -1,11 +1,11 @@
 const Router = require('express');
 const folderRouter = new Router();
 const folderController = require('../controllers/folderController');
-const authMiddleware = require('../middleware/authMiddleware');
+const folderValidationScheme = require('../validation/folderValidation');
 
 folderRouter
-  .post('/', authMiddleware, folderController.createFolder)
-  .delete('/', authMiddleware, folderController.deleteFolder)
-  .get('/', authMiddleware, folderController.getFolders);
+  .post('/', folderValidationScheme, folderController.createFolder)
+  .delete('/', folderController.deleteFolder)
+  .get('/', folderController.getFolders);
 
 module.exports = folderRouter;

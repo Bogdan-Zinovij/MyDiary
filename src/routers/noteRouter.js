@@ -1,12 +1,12 @@
 const Router = require('express');
 const noteRouter = new Router();
 const noteController = require('../controllers/noteController');
-const authMiddleware = require('../middleware/authMiddleware');
+const noteValidationScheme = require('../validation/noteValidation');
 
 noteRouter
-  .post('/', authMiddleware, noteController.createNote)
-  .delete('/', authMiddleware, noteController.deleteNote)
-  .get('/', authMiddleware, noteController.getNotes)
-  .patch('/', authMiddleware, noteController.updateNote);
+  .post('/', noteValidationScheme, noteController.createNote)
+  .delete('/', noteController.deleteNote)
+  .get('/', noteController.getNotes)
+  .patch('/', noteValidationScheme, noteController.updateNote);
 
 module.exports = noteRouter;

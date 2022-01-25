@@ -1,8 +1,14 @@
 const Folder = require('../db/models/Folder');
+const { validationResult } = require('express-validator');
 
 class FolderController {
   async createFolder(req, res) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ message: errors });
+      }
+
       const { name } = req.body;
       const userId = req.userId;
 

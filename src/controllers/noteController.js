@@ -1,9 +1,15 @@
 const Note = require('../db/models/Note');
 const Folder = require('../db/models/Folder');
+const { validationResult } = require('express-validator');
 
 class NoteController {
   async createNote(req, res) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ message: errors });
+      }
+
       await Note.create(req.body);
 
       res.status(201).json({ message: 'Note was created!' });
@@ -63,6 +69,11 @@ class NoteController {
 
   async updateNote(req, res) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ message: errors });
+      }
+
       const userId = req.userId;
       const { id, dataToUpdate } = req.body;
       const note = await Note.findByPk(id);
