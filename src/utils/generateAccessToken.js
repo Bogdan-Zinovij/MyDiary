@@ -3,7 +3,7 @@ const { secret } = require('../config');
 
 const generateAccessToken = (userId) => {
   const payload = { userId };
-  return jwt.sign(payload, secret, { expiresIn: '24h' });
+  return jwt.sign(payload, secret, { expiresIn: '3m' });
 };
 
 module.exports = generateAccessToken;

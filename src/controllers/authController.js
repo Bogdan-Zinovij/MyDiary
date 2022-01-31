@@ -2,6 +2,7 @@
 
 const User = require('../db/models/User');
 const generateAccessToken = require('../utils/generateAccessToken');
+const generateRefreshToken = require('../utils/generateRefreshToken');
 const { validationResult } = require('express-validator');
 
 class AuthController {
@@ -44,9 +45,21 @@ class AuthController {
           .json({ message: `User was not found / incorrect password` });
       }
 
-      const token = generateAccessToken(user.id);
+      const accessToken = generateAccessToken(user.id);
+      const refreshToken = generateRefreshToken(user.id);
 
-      res.status(200).json({ token });
+      res.status(200).json({ accessToken, refreshToken });
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  }
+
+  async refreshToken(req, res) {
+    try {
+      const newAccessToken = generateAccessToken(req.userId);
+      const newRefreshToken = generateRefreshToken(req.userId);
+
+      res.status(200).json({ newAccessToken, newRefreshToken });
     } catch (err) {
       res.status(400).json({ message: err.message });
     }

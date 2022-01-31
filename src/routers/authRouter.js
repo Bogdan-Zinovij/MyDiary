@@ -9,6 +9,7 @@ const {
 authRouter
   .post('/registration', registrValidationScheme, authController.registration)
   .post('/login', loginValidationScheme, authController.login)
-  .get('/users', authController.getUsers);
+  .get('/users', authController.getUsers)
+  .post('/refresh', authController.refreshToken);
 
 module.exports = authRouter;
