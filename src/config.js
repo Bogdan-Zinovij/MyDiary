@@ -1,3 +1,4 @@
 const secret = 'bogdan019';
+const secretRefresh = 'bog';
 
-module.exports = { secret };
+module.exports = { secret, secretRefresh };
