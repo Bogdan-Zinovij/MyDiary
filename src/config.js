@@ -1,4 +1,4 @@
-const secret = 'bogdan019';
-const secretRefresh = 'bog';
+const accessTokenSecret = '16f2c5s';
+const refreshTokenSecret = 'v7z23n';
 
-module.exports = { secret, secretRefresh };
+module.exports = { accessTokenSecret, refreshTokenSecret };
