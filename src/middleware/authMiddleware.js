@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { secret } = require('../config');
+const { accessTokenSecret } = require('../config');
 
 module.exports = function (req, res, next) {
   if (req.method === 'OPTIONS') {
@@ -7,17 +7,25 @@ module.exports = function (req, res, next) {
   }
 
   try {
-    const token = req.headers.authorization;
+    const accessToken = req.headers.accesstoken;
 
-    if (!token) {
-      return res.status(403).json({ message: 'The user is not authorized' });
+    if (!accessToken) {
+      return res.status(401).json({ message: 'The user is not authorized' });
     }
 
-    const payload = jwt.verify(token, secret);
+    const payload = jwt.verify(accessToken, accessTokenSecret);
     req.userId = payload.userId;
 
     next();
   } catch (err) {
-    return res.status(403).json({ message: err.message });
+    if (err instanceof jwt.TokenExpiredError) {
+      return res.status(401).json({ message: 'The access token expired' });
+    }
+
+    if (err instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({ message: 'Invalid access token' });
+    }
+
+    return res.status(400).json({ message: err.message });
   }
 };

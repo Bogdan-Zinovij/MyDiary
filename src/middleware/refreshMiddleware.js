@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { secretRefresh } = require('../config');
+const { refreshTokenSecret } = require('../config');
 
 module.exports = function (req, res, next) {
   if (req.method === 'OPTIONS') {
@@ -7,17 +7,25 @@ module.exports = function (req, res, next) {
   }
 
   try {
-    const token = req.headers.refreshToken;
+    const refreshToken = req.headers.refreshtoken;
 
-    if (!token) {
-      return res.status(403).json({ message: 'Token does not exist' });
+    if (!refreshToken) {
+      return res.status(401).json({ message: 'The user is not authorized' });
     }
 
-    const payload = jwt.verify(token, secretRefresh);
+    const payload = jwt.verify(refreshToken, refreshTokenSecret);
     req.userId = payload.userId;
 
     next();
   } catch (err) {
-    return res.status(403).json({ message: err.message });
+    if (err instanceof jwt.TokenExpiredError) {
+      return res.status(401).json({ message: 'The refresh token expired' });
+    }
+
+    if (err instanceof jwt.JsonWebTokenError) {
+      return res.status(401).json({ message: 'Invalid refresh token' });
+    }
+
+    return res.status(400).json({ message: err.message });
   }
 };
